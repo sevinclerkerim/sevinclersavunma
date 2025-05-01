@@ -1,10 +1,205 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>sevinclersavunma</title>
-  </head>
-  <body>
-    <h1>Yalnız Öğrenmek Zordur.</h1>
-    <p>Sevinçler Savunma.</p>
-  </body>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sevinçler Blog</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #013220;
+      color: #f1f1f1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #014421;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .add-post-btn {
+      background-color: #02735E;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .add-post-btn:hover {
+      background-color: #039E85;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    article {
+      background-color: #014d3d;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    article h2 {
+      margin-top: 0;
+      color: #ffffff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    /* Modal (Popup) */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-content {
+      background-color: #014d3d;
+      margin: 10% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px; right: 15px;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      border-radius: 6px;
+      padding: 10px;
+      border: none;
+      font-size: 16px;
+      resize: vertical;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .publish-btn {
+      display: flex;
+      align-items: center;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+
+    .publish-btn svg {
+      margin-right: 8px;
+      fill: white;
+    }
+
+    .publish-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Sevinçler Blog</h1>
+    <button class="add-post-btn" onclick="openModal()">+ Yazı Ekle</button>
+  </header>
+
+  <main id="posts">
+    <!-- Mevcut yazılar -->
+    <article>
+      <h2>Hoşgeldiniz!</h2>
+      <p>Bu, blog sayfanızdaki ilk yazıdır.</p>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 Sevinçler Savunma | Blog
+  </footer>
+
+  <!-- Modal -->
+  <div id="postModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Yeni Yazı</h2>
+      <textarea id="postContent" placeholder="Yazınızı buraya girin..."></textarea>
+      <button class="publish-btn" onclick="publishPost()">
+        <svg height="20" width="20" viewBox="0 0 24 24"><path d="M4 17l6-6-6-6v12zm8-12h2v12h-2v-12zm4 6l6 6v-12l-6 6z"/></svg>
+        Yayınla
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById("postModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("postModal").style.display = "none";
+    }
+
+    function publishPost() {
+      const content = document.getElementById("postContent").value.trim();
+      if (!content) return alert("Lütfen bir yazı girin.");
+
+      const newPost = document.createElement("article");
+      const h2 = document.createElement("h2");
+      h2.innerText = "Yeni Yazı";
+      const p = document.createElement("p");
+      p.innerText = content;
+
+      newPost.appendChild(h2);
+      newPost.appendChild(p);
+
+      document.getElementById("posts").prepend(newPost);
+
+      // Temizle ve kapat
+      document.getElementById("postContent").value = "";
+      closeModal();
+    }
+
+    // Modalı dışarı tıklayınca kapat
+    window.onclick = function(event) {
+      const modal = document.getElementById("postModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+
+</body>
 </html>
